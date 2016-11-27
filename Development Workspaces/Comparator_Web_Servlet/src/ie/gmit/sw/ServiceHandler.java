@@ -6,7 +6,7 @@ import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
 	private String remoteHost = null;
-	private static long jobNumber = 0;
+	private volatile static long jobNumber = 0;
 
 	public void init() throws ServletException {
 		ServletContext ctx = getServletContext();
