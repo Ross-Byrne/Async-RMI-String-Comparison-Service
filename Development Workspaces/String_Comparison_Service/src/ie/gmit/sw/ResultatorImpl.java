@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 /**
  * Created by Ross Byrne on 05/12/16.
+ * Implementation of Resultator interface
  */
 public class ResultatorImpl implements Resultator {
 
