@@ -27,6 +27,8 @@ public class StringServiceImpl extends UnicastRemoteObject implements StringServ
         // create Resultator object with result
         result = new ResultatorImpl();
 
+        result.setResult("Hello");
+
         // return result object
         return result;
 
