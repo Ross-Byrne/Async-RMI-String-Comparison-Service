@@ -11,7 +11,7 @@ public class ServiceHandler extends HttpServlet {
 	private String remoteHost = null;
 	private volatile static long jobNumber = 0;
     private BlockingQueue<Request> inQueue = new LinkedBlockingQueue();
-    private Map<String, Resultator> outQueue = new HashMap();
+    private ConcurrentMap<String, Resultator> outQueue = new ConcurrentHashMap();
 
 	public void init() throws ServletException {
 
