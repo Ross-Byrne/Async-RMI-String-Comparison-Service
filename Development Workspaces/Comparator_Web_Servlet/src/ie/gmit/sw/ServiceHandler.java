@@ -5,15 +5,32 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
+
 	private String remoteHost = null;
 	private volatile static long jobNumber = 0;
 
 	public void init() throws ServletException {
+
 		ServletContext ctx = getServletContext();
+
+		// get remote host
 		remoteHost = ctx.getInitParameter("RMI_SERVER"); //Reads the value from the <context-param> in web.xml
-	}
+
+        // get string compare service registered lookup name from web.xml
+
+        // get handle on remote object
+
+        // setup in queue
+
+        // setup out queue
+
+        // create threadpool?? to handle work from in queue and put finished result in out queue
+        // thread will handle calling string compare methods
+
+	} // init()
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();
 		
@@ -27,14 +44,19 @@ public class ServiceHandler extends HttpServlet {
 		out.print("<html><head><title>Distributed Systems Assignment</title>");		
 		out.print("</head>");		
 		out.print("<body>");
-		
+
+		// check for task number
 		if (taskNumber == null){
+
 			taskNumber = new String("T" + jobNumber);
 			jobNumber++;
 			//Add job to in-queue
+
 		}else{
+
 			//Check out-queue for finished job
-		}
+
+		} // if
 		
 		
 		
@@ -77,10 +99,12 @@ public class ServiceHandler extends HttpServlet {
 				
 		//You can use this method to implement the functionality of an RMI client
 		
-		//
-	}
+
+	} // doGet()
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
- 	}
-}
+
+ 	} // doPost()
+
+} // class
