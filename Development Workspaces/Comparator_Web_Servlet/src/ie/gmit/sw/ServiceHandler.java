@@ -1,6 +1,8 @@
 package ie.gmit.sw;
 
 import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -8,6 +10,8 @@ public class ServiceHandler extends HttpServlet {
 
 	private String remoteHost = null;
 	private volatile static long jobNumber = 0;
+    private BlockingQueue<Request> inQueue = new LinkedBlockingQueue();
+    private Map<String, Resultator> outQueue = new HashMap();
 
 	public void init() throws ServletException {
 
@@ -50,11 +54,24 @@ public class ServiceHandler extends HttpServlet {
 
 			taskNumber = new String("T" + jobNumber);
 			jobNumber++;
+
+			// create new request object
+            Request r = new Request();
+
+            // add request details to object
+            r.setAlgorithm(algorithm);
+            r.setTaskNumber(taskNumber);
+            r.setTextS(s);
+            r.setTextT(t);
+
 			//Add job to in-queue
+            inQueue.add(r);
 
 		}else{
 
 			//Check out-queue for finished job
+
+            // if finished, flag as finished so result can be displayed
 
 		} // if
 		
