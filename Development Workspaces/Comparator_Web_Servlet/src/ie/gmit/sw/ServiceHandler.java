@@ -34,7 +34,7 @@ public class ServiceHandler extends HttpServlet {
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();
 		
-		//Initialise some request varuables with the submitted form info. These are local to this method and thread safe...
+		//Initialise some request variables with the submitted form info. These are local to this method and thread safe...
 		String algorithm = req.getParameter("cmbAlgorithm");
 		String s = req.getParameter("txtS");
 		String t = req.getParameter("txtT");
