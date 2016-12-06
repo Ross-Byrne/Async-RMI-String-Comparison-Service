@@ -1,6 +1,8 @@
 package ie.gmit.sw;
 
 import java.rmi.Naming;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Ross Byrne on 05/12/16.
@@ -8,7 +10,9 @@ import java.rmi.Naming;
  */
 public class TestRunner {
 
+
     public static void main(String[] args) {
+
 
         try {
             // create connect to StringCompareServer
@@ -32,5 +36,6 @@ public class TestRunner {
             ex.printStackTrace();
         }
     } // main()
+
 
 } // class

@@ -50,6 +50,8 @@ public class ServiceHandler extends HttpServlet {
 
         } // try
 
+        // start service to check queue for results and process them
+
 	} // init()
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
