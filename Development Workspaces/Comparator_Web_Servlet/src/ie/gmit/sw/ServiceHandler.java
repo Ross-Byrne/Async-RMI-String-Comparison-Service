@@ -8,14 +8,11 @@ import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
 
-    private int numberOfThreads = 1000;
+    private RequestProcesser requestProcesser;
 	private String remoteHost = null;
 	private String stringCompareRegName = null;
 	private volatile static long jobNumber = 0;
-    private BlockingQueue<Request> inQueue;
-    private ConcurrentMap<String, Resultator> outQueue;
-    private ExecutorService executorService;
-    private StringService stringService;
+
 
 	public void init() throws ServletException {
 
@@ -28,33 +25,15 @@ public class ServiceHandler extends HttpServlet {
         // get string compare service registered lookup name from web.xml
         stringCompareRegName = ctx.getInitParameter("Remote_Object_Name");
 
-        // setup in queue
-        inQueue = new LinkedBlockingQueue<Request>();
-
-        // setup out queue
-        outQueue = new ConcurrentHashMap<String, Resultator>();
-
-        // initialise thread pool
-        executorService = Executors.newFixedThreadPool(numberOfThreads);
-
-        // try to get a handle on remote object
-        try {
-
-            // get handle on remote String Comparison Service Object
-            stringService = (StringService) Naming.lookup("rmi://" + remoteHost + ":1099/" + stringCompareRegName);
-
-        } catch (Exception ex){
-
-            // print Stack Trace if exception in thrown
-            ex.printStackTrace();
-
-        } // try
-
-        // start service to check queue for results and process them
+        // create RequestProcessor, once created, it will start trying to process requests
+        requestProcesser = new RequestProcesser(remoteHost, stringCompareRegName);
 
 	} // init()
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        boolean isProcessed = false;
+        String result = null;
 
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();
@@ -86,17 +65,22 @@ public class ServiceHandler extends HttpServlet {
             r.setTextT(t);
 
 			//Add job to in-queue
-            inQueue.add(r);
+            requestProcesser.addRequest(r);
 
 		}else{
 
 			//Check out-queue for finished job
+            isProcessed = requestProcesser.isProcessed(taskNumber);
 
-            // if finished, flag as finished so result can be displayed
+            // if finished
+            if(isProcessed == true) {
+
+                // get the result object
+                result = requestProcesser.getResult(taskNumber);
+
+            } // if
 
 		} // if
-		
-		
 		
 		out.print("<H1>Processing request for Job#: " + taskNumber + "</H1>");
 		out.print("<div id=\"r\"></div>");
@@ -106,6 +90,14 @@ public class ServiceHandler extends HttpServlet {
 		out.print("<br>Algorithm: " + algorithm);		
 		out.print("<br>String <i>s</i> : " + s);
 		out.print("<br>String <i>t</i> : " + t);
+
+		// display the result if it is ready
+        if(isProcessed == true){
+
+            out.print("<br>Distance: " + result);
+
+        } // if
+
 		out.print("<br>This servlet should only be responsible for handling client request and returning responses. Everything else should be handled by different objects.");
 		out.print("Note that any variables declared inside this doGet() method are thread safe. Anything defined at a class level is shared between HTTP requests.");				
 		out.print("</b></font>");
