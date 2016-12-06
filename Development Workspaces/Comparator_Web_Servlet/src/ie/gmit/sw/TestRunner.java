@@ -3,6 +3,7 @@ package ie.gmit.sw;
 import java.rmi.Naming;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * Created by Ross Byrne on 05/12/16.
@@ -35,11 +36,12 @@ public class TestRunner {
             // create RequestProcessor, once created, it will start trying to process requests
             RequestProcesser requestProcesser = new RequestProcesser("localhost", "StringCompareService");
 
+            requestProcesser.isProcessed("ewfewf");
         } catch (Exception ex){
 
             ex.printStackTrace();
         }
-    } // main()
 
+    } // main()
 
 } // class

@@ -5,12 +5,13 @@ import java.util.concurrent.*;
 
 /**
  * Created by Ross Byrne on 06/12/16.
- * Processes the requests sent by the user
- * This includes calling the string comparison service
+ * Processes the requests sent by the user.
+ * This includes calling the string comparison service.
+ * Encapsulates Resultator, inQueue, outQueue and RMI Service completely.
  */
 public class RequestProcesser {
 
-    private int numberOfThreads = 1000;
+    private int numberOfThreads = 1;
     private BlockingQueue<Request> inQueue;
     private ConcurrentMap<String, Resultator> outQueue;
     private ExecutorService executorService;
@@ -20,6 +21,7 @@ public class RequestProcesser {
 
     public RequestProcesser(String remoteHost, String remoteService){
 
+        // set member variables
         this.remoteHost = remoteHost;
         this.stringCompareRegName = remoteService;
 
@@ -52,29 +54,43 @@ public class RequestProcesser {
 
 
     // creates a thread to start processing the requests in queue
-    public void processRequests(){
+    private void processRequests(){
 
-        // create thread to start servicing requests in inQueue
-        Runnable thread = new Runnable() {
+        System.out.println("Starting to process requests.");
+
+        // create thread to start servicing requests in inQueue using executorService
+        executorService.submit(new Runnable() {
+
+            Request request;
+            Resultator resultator;
 
             public void run() {
 
                 boolean doWork = true;
 
+                // contantly try to take requests off inQueue
                 while(doWork){
 
-                    // take request off inQueue
+                    try {
+                        // take request off inQueue (take() method is blocking if nothing is on queue)
+                        request = inQueue.take();
 
-                    // using stringService to call remote method
+                        // using stringService to call remote method
+                        resultator = stringService.compare(request.getTextS(), request.getTextT(), request.getAlgorithm());
 
-                    // add returned resultator to outQueue
+                        // add returned resultator to outQueue
+                        outQueue.put(request.getTaskNumber(), resultator);
 
-                    System.out.println("Work");
+                        System.out.println("Processed request.");
 
+                    } catch(Exception ex){
+
+                        ex.printStackTrace();
+                    } // try
                 } // while
 
             } // run()
-        }; // runnable()
+        }); // runnable()
 
     } // processRequests
 
@@ -120,12 +136,16 @@ public class RequestProcesser {
     public String getResult(String taskNumber){
 
         try{
+            // check if task is in map
+            if(outQueue.containsKey(taskNumber)) {
 
-            // get the resultator from the map
-            Resultator r = outQueue.get(taskNumber);
+                // get the resultator from the map
+                Resultator r = outQueue.get(taskNumber);
 
-            // delegate resultators method to return result
-            return r.getResult();
+                // delegate resultators method to return result
+                return r.getResult();
+
+            } // if
 
         } catch(Exception ex){
 
@@ -136,6 +156,8 @@ public class RequestProcesser {
             return "";
 
         } // try
+
+        return "";
 
     } // getResult
 
