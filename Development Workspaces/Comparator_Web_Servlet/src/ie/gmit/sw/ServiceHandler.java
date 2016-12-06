@@ -1,35 +1,54 @@
 package ie.gmit.sw;
 
 import java.io.*;
-import java.util.*;
+import java.rmi.Naming;
 import java.util.concurrent.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
 
+    private int numberOfThreads = 1000;
 	private String remoteHost = null;
+	private String stringCompareRegName = null;
 	private volatile static long jobNumber = 0;
-    private BlockingQueue<Request> inQueue = new LinkedBlockingQueue();
-    private ConcurrentMap<String, Resultator> outQueue = new ConcurrentHashMap();
+    private BlockingQueue<Request> inQueue;
+    private ConcurrentMap<String, Resultator> outQueue;
+    private ExecutorService executorService;
+    private StringService stringService;
 
 	public void init() throws ServletException {
 
+        // get the servlet context
 		ServletContext ctx = getServletContext();
 
 		// get remote host
 		remoteHost = ctx.getInitParameter("RMI_SERVER"); //Reads the value from the <context-param> in web.xml
 
         // get string compare service registered lookup name from web.xml
-
-        // get handle on remote object
+        stringCompareRegName = ctx.getInitParameter("Remote_Object_Name");
 
         // setup in queue
+        inQueue = new LinkedBlockingQueue<Request>();
 
         // setup out queue
+        outQueue = new ConcurrentHashMap<String, Resultator>();
 
-        // create threadpool?? to handle work from in queue and put finished result in out queue
-        // thread will handle calling string compare methods
+        // initialise thread pool
+        executorService = Executors.newFixedThreadPool(numberOfThreads);
+
+        // try to get a handle on remote object
+        try {
+
+            // get handle on remote String Comparison Service Object
+            stringService = (StringService) Naming.lookup("rmi://" + remoteHost + ":1099/" + stringCompareRegName);
+
+        } catch (Exception ex){
+
+            // print Stack Trace if exception in thrown
+            ex.printStackTrace();
+
+        } // try
 
 	} // init()
 
