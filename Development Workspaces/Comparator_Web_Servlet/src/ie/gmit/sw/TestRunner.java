@@ -31,6 +31,10 @@ public class TestRunner {
             //Print out the result from the result object.
             System.out.println(result.getResult());
 
+            // test request processer
+            // create RequestProcessor, once created, it will start trying to process requests
+            RequestProcesser requestProcesser = new RequestProcesser("localhost", "StringCompareService");
+
         } catch (Exception ex){
 
             ex.printStackTrace();

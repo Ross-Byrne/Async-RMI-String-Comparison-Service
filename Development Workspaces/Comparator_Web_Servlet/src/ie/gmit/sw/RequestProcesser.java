@@ -46,8 +46,37 @@ public class RequestProcesser {
         } // try
 
         // start service to check queue for results and process them
+        processRequests();
 
     } // contructor()
+
+
+    // creates a thread to start processing the requests in queue
+    public void processRequests(){
+
+        // create thread to start servicing requests in inQueue
+        Runnable thread = new Runnable() {
+
+            public void run() {
+
+                boolean doWork = true;
+
+                while(doWork){
+
+                    // take request off inQueue
+
+                    // using stringService to call remote method
+
+                    // add returned resultator to outQueue
+
+                    System.out.println("Work");
+
+                } // while
+
+            } // run()
+        }; // runnable()
+
+    } // processRequests
 
 
     // add a request to the inQueue
