@@ -8,6 +8,15 @@ import java.util.concurrent.*;
  * Processes the requests sent by the user.
  * This includes calling the string comparison service.
  * Encapsulates Resultator, inQueue, outQueue and RMI Service completely.
+ *
+ * Initialises in queue and out queue.
+ * Gets Remote object from remote string service.
+ * Starts thread that continuously pulls requests off the inqeue,
+ * calls the remote function compare using request details.
+ * this returns Resultator object straight away while the comparison work
+ * is being completed in a thread of its own.
+ * The Resultator is then added to out queue for requests to check
+ * if work on comparison is finished.
  */
 public class RequestProcesser {
 

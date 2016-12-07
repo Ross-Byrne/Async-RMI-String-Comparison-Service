@@ -50,9 +50,12 @@ public class ServiceHandler extends HttpServlet {
 		out.print("<body>");
 
 		// check for task number
-		if (taskNumber == null){
+		if (taskNumber == null){    // if no number
 
+            // create taskNumber
 			taskNumber = new String("T" + jobNumber);
+
+			// increment job count
 			jobNumber++;
 
 			// create new request object
@@ -67,9 +70,9 @@ public class ServiceHandler extends HttpServlet {
 			//Add job to in-queue
             requestProcesser.addRequest(r);
 
-		}else{
+		}else{ // if there is a task number
 
-			//Check out-queue for finished job
+			//Check out-queue to see if comparison is completed
             isProcessed = requestProcesser.isProcessed(taskNumber);
 
             // if finished
@@ -96,7 +99,10 @@ public class ServiceHandler extends HttpServlet {
 
             out.print("<br>Distance: " + result);
 
-        } // if
+        } else {
+
+            out.print("<br>Calculating Result...");
+        }
 
 		out.print("<br>This servlet should only be responsible for handling client request and returning responses. Everything else should be handled by different objects.");
 		out.print("Note that any variables declared inside this doGet() method are thread safe. Anything defined at a class level is shared between HTTP requests.");				
