@@ -21,4 +21,54 @@ public class StringComparisonFactory {
 
     } // getInstance()
 
+    // returns the specified string comparison algorithm
+    public StringComparator getComparisonAlgorithm(String algo){
+
+        StringComparator s = null;
+
+        // select the string comparison algorithm
+        switch (algo){
+            case "Damerau-Levenshtein Distance":
+
+                s = new LevenshteinComparator();
+                break;
+            case "Euclidean Distance":
+
+                s = new LevenshteinComparator();
+                break;
+            case "Hamming Distance":
+
+                s = new LevenshteinComparator();
+                break;
+            case "Hirschberg's Algorithm":
+
+                s = new LevenshteinComparator();
+                break;
+            case "Jaro–Winkler Distance":
+
+                s = new LevenshteinComparator();
+                break;
+            case "Levenshtein Distance":
+
+                s = new LevenshteinComparator();
+                break;
+            case "Needleman-Wunsch":
+
+                s = new LevenshteinComparator();
+                break;
+            case "Smith Waterman":
+
+                s = new LevenshteinComparator();
+                break;
+            default:
+
+            s = new LevenshteinComparator();
+
+        } // switch()
+
+        // return it
+        return s;
+
+    } // getComparisonAlgorithm()
+
 } // class
