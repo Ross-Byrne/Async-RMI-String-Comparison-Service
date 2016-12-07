@@ -29,6 +29,8 @@ public class StringServiceImpl extends UnicastRemoteObject implements StringServ
         // get instance of string comparison factory
         stringFactory = StringComparisonFactory.getInstance();
 
+        System.out.println("String Service has been created");
+
     } // contructor()
 
     // compare the two strings with specified string comparison algorithm

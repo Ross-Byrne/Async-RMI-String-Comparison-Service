@@ -1,23 +1,44 @@
 package ie.gmit.sw;
 
 import java.io.*;
+import java.rmi.Naming;
+import java.util.concurrent.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
+
+    private RequestProcesser requestProcesser;
 	private String remoteHost = null;
-	private static long jobNumber = 0;
+	private String stringCompareRegName = null;
+	private volatile static long jobNumber = 0;
+
 
 	public void init() throws ServletException {
+
+        // get the servlet context
 		ServletContext ctx = getServletContext();
+
+		// get remote host
 		remoteHost = ctx.getInitParameter("RMI_SERVER"); //Reads the value from the <context-param> in web.xml
-	}
+
+        // get string compare service registered lookup name from web.xml
+        stringCompareRegName = ctx.getInitParameter("Remote_Object_Name");
+
+        // create RequestProcessor, once created, it will start trying to process requests
+        requestProcesser = new RequestProcesser(remoteHost, stringCompareRegName);
+
+	} // init()
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        boolean isProcessed = false;
+        String result = null;
+
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();
 		
-		//Initialise some request varuables with the submitted form info. These are local to this method and thread safe...
+		//Initialise some request variables with the submitted form info. These are local to this method and thread safe...
 		String algorithm = req.getParameter("cmbAlgorithm");
 		String s = req.getParameter("txtS");
 		String t = req.getParameter("txtT");
@@ -27,16 +48,42 @@ public class ServiceHandler extends HttpServlet {
 		out.print("<html><head><title>Distributed Systems Assignment</title>");		
 		out.print("</head>");		
 		out.print("<body>");
-		
-		if (taskNumber == null){
+
+		// check for task number
+		if (taskNumber == null){    // if no number
+
+            // create taskNumber
 			taskNumber = new String("T" + jobNumber);
+
+			// increment job count
 			jobNumber++;
+
+			// create new request object
+            Request r = new Request();
+
+            // add request details to object
+            r.setAlgorithm(algorithm);
+            r.setTaskNumber(taskNumber);
+            r.setTextS(s);
+            r.setTextT(t);
+
 			//Add job to in-queue
-		}else{
-			//Check out-queue for finished job
-		}
-		
-		
+            requestProcesser.addRequest(r);
+
+		}else{ // if there is a task number
+
+			//Check out-queue to see if comparison is completed
+            isProcessed = requestProcesser.isProcessed(taskNumber);
+
+            // if finished
+            if(isProcessed == true) {
+
+                // get the result object
+                result = requestProcesser.getResult(taskNumber);
+
+            } // if
+
+		} // if
 		
 		out.print("<H1>Processing request for Job#: " + taskNumber + "</H1>");
 		out.print("<div id=\"r\"></div>");
@@ -46,6 +93,19 @@ public class ServiceHandler extends HttpServlet {
 		out.print("<br>Algorithm: " + algorithm);		
 		out.print("<br>String <i>s</i> : " + s);
 		out.print("<br>String <i>t</i> : " + t);
+
+		// display the result if it is ready
+        if(isProcessed == true){
+
+            out.print("<br>Distance: " + result);
+
+        } else {
+
+            out.print("<br>Calculating Result...");
+        }
+
+        out.print("<br>TESTING");
+
 		out.print("<br>This servlet should only be responsible for handling client request and returning responses. Everything else should be handled by different objects.");
 		out.print("Note that any variables declared inside this doGet() method are thread safe. Anything defined at a class level is shared between HTTP requests.");				
 		out.print("</b></font>");
@@ -77,10 +137,12 @@ public class ServiceHandler extends HttpServlet {
 				
 		//You can use this method to implement the functionality of an RMI client
 		
-		//
-	}
+
+	} // doGet()
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
- 	}
-}
+
+ 	} // doPost()
+
+} // class
