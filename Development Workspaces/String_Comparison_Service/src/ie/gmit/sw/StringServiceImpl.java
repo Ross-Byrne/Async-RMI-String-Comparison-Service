@@ -9,6 +9,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * Created by Ross Byrne on 05/12/16.
  * Implementation of StringService interface
+ * Service that creates the Resultator object
+ * Gets the string comparison algorithm from a singleton factory
+ * Starts string comparison in a thread that is submitted to thread pool
+ * Returns Resultator start away (because work is being done in a thread)
  */
 public class StringServiceImpl extends UnicastRemoteObject implements StringService {
 
