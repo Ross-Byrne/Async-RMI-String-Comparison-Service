@@ -16,6 +16,9 @@ public class ResultatorImpl extends UnicastRemoteObject implements Resultator {
 
     public ResultatorImpl() throws RemoteException {
 
+        // initialise variables
+        isProcessed = false;
+
     } // contructor()
 
     // returns the result of the string comparison

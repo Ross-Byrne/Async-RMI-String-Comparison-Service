@@ -14,13 +14,16 @@ public class StringServiceImpl extends UnicastRemoteObject implements StringServ
 
     private static final long serialVersionUID = 1L;
     private int numberOfThreads = 100;
-    private Resultator result;
-    private ExecutorService service;
+    private StringComparisonFactory stringFactory;
+    private ExecutorService executorService;
 
     public StringServiceImpl() throws RemoteException{
 
         // initialise the thread pool
-        service = Executors.newFixedThreadPool(numberOfThreads);
+        executorService = Executors.newFixedThreadPool(numberOfThreads);
+
+        // get instance of string comparison factory
+        stringFactory = StringComparisonFactory.getInstance();
 
     } // contructor()
 
@@ -28,16 +31,44 @@ public class StringServiceImpl extends UnicastRemoteObject implements StringServ
     // returns the result in a Resultator object
     public Resultator compare(String s, String t, String algo) throws RemoteException {
 
-        // insert stringCompareFractory here
+        Resultator result = new ResultatorImpl();
 
-        // compare the strings
+        // get string comparison algorithm
+        StringComparator comparisonAlgo = stringFactory.getComparisonAlgorithm(algo);
 
-        // create Resultator object with result
-        result = new ResultatorImpl();
+        System.out.println("Submitting string comparison work to thread");
 
-        result.setResult("Hello");
+        // create thread and submit it to the executor service
+        // this allows for the remote object to be returned before the work is complete
+        executorService.submit(new Runnable() {
 
-        // return result object
+            public void run() {
+
+                try {
+
+                    // to simulate time, make thread sleep
+                    Thread.sleep(3000);
+
+                    // compare the strings
+                    result.setResult(comparisonAlgo.preformComparison(s, t));
+
+                    // work is complete, flag it as processed
+                    result.setProcessed();
+
+                    System.out.println("Thread finished Work.");
+
+                }catch (Exception ex){
+
+                    ex.printStackTrace();
+
+                } // try
+
+            } // run()
+        });
+
+        System.out.println("Returning resultator");
+
+        // return resultator object reference while result is still bring worked on
         return result;
 
     } // Resultator()

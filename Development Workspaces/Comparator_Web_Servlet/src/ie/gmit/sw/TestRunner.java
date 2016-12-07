@@ -25,18 +25,23 @@ public class TestRunner {
 
             //Make the remote method invocation. This results in the Resultator object being transferred
             //to us over the network in serialized form.
-            Resultator result = ss.compare("", "", "" );
+            Resultator result = ss.compare("wefwefwf", "wefwefwfww", "" );
 
             System.out.println("Resultator Object ID: " + result);
+
+            while(!result.isProcessed()){
+
+                // wait for result to be computed
+            }
 
             //Print out the result from the result object.
             System.out.println(result.getResult());
 
             // test request processer
             // create RequestProcessor, once created, it will start trying to process requests
-            RequestProcesser requestProcesser = new RequestProcesser("localhost", "StringCompareService");
+           // RequestProcesser requestProcesser = new RequestProcesser("localhost", "StringCompareService");
 
-            requestProcesser.isProcessed("ewfewf");
+           // requestProcesser.isProcessed("ewfewf");
         } catch (Exception ex){
 
             ex.printStackTrace();
