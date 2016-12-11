@@ -1,8 +1,6 @@
 package ie.gmit.sw;
 
 import java.io.*;
-import java.rmi.Naming;
-import java.util.concurrent.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -97,7 +95,16 @@ public class ServiceHandler extends HttpServlet {
 		// display the result if it is ready
         if(isProcessed == true){
 
-            out.print("<br>Distance: " + result);
+            // display result wording depending on algorithm type
+            if(algorithm.equals("Needleman-Wunsch") || algorithm.equals("Smith Waterman")){
+
+                out.print("<br>String Alignment: " + result);
+
+            } else {
+
+                out.print("<br>String Distance: " + result);
+
+            } // if
 
         } else {
 

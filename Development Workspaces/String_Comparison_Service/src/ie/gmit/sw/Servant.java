@@ -7,7 +7,7 @@ import java.rmi.*;
  * Created by Ross Byrne on 05/12/16.
  * Class to start serving the RMI Service
  */
-public class StringCompareServer {
+public class Servant {
 
     public static void main(String[] args) {
 

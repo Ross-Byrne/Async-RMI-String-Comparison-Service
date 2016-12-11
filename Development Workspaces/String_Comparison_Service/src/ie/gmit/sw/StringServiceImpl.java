@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * Service that creates the Resultator object
  * Gets the string comparison algorithm from a singleton factory
  * Starts string comparison in a thread that is submitted to thread pool
- * Returns Resultator start away (because work is being done in a thread)
+ * Returns Resultator straight away (because work is being done in a thread)
  */
 public class StringServiceImpl extends UnicastRemoteObject implements StringService {
 
