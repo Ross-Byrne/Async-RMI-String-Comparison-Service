@@ -43,6 +43,15 @@ The website then polls the server to see if the result in the out queue is finis
 
 The String Service contains a compare method. This method creates a result object, adds a new thread to a thread pool and returns the result object. Because the work is being done on a thread, the result object is returned straight away. The new thread uses a factory to get the correct algorithm, runs the algorithm and then flags the result as processed.
 
+###String Comparison Algorithms
+The list of implemented string comparison algorithms are as follows:
+
+Hamming Distance.<br>
+Levenshtein Distance.<br>
+Damerau-Levenshtein Distance.<br>
+Jaro-Winkler Distance.<br>
+Needleman-Wunsch.<br>
+Smith Waterman.
 
 #Other Notes
 ###The Remote Interfaces
