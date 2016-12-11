@@ -33,9 +33,6 @@ public class StringComparisonFactory {
                 System.out.println("Creating: " + algo + " algorithm object.");
 
                 s = new DamerauLevenshteinComparator();
-
-               // System.out.println(s.getClass().getCanonicalName());
-
                 break;
             case "Euclidean Distance":
 
@@ -55,11 +52,11 @@ public class StringComparisonFactory {
 
                 s = new LevenshteinComparator();
                 break;
-            case "Jaro–Winkler Distance":
+            case "Jaro-Winkler Distance":
 
                 System.out.println("Creating: " + algo + " algorithm object.");
 
-                s = new LevenshteinComparator();
+                s = new JaroWinklerComparator();
                 break;
             case "Levenshtein Distance":
 
