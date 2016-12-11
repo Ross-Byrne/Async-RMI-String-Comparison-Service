@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 /**
  * Created by Ross Byrne on 27/11/16.
+ * Interface for a String Service that compares strings
  */
 public interface StringService extends Remote {
 

@@ -36,7 +36,7 @@ public class TestRunner {
 
             // test request processer
             // create RequestProcessor, once created, it will start trying to process requests
-           // RequestProcesser requestProcesser = new RequestProcesser("localhost", "StringCompareService");
+           // RequestProcessor requestProcesser = new RequestProcessor("localhost", "StringCompareService");
 
            // requestProcesser.isProcessed("ewfewf");
         } catch (Exception ex){

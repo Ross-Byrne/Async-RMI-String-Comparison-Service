@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 /**
  * Created by Ross Byrne on 27/11/16.
+ * Remote Interface for RMI String Service
  */
 public interface StringService {
 

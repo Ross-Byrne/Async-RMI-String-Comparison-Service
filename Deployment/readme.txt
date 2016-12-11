@@ -7,13 +7,13 @@ Link to the GitHub repository: https://github.com/Ross-Byrne/Async-RMI-String-Co
 
 #Get Tomcat, which can be found here: https://tomcat.apache.org/download-90.cgi
 
-#Add comparator.war to TomCat's webapps folder
-
 #Run String Service
 
 #Run string-service.jar using the following command:
 
-java –cp ./string-service.jar ie.gmit.sw.Servant
+java -cp ./string-service.jar ie.gmit.sw.Servant
+
+#Add comparator.war to TomCat's webapps folder
 
 #################################
 Start Tomcat & Load Website

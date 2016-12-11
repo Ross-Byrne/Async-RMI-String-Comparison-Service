@@ -6,7 +6,7 @@ import javax.servlet.http.*;
 
 public class ServiceHandler extends HttpServlet {
 
-    private RequestProcesser requestProcesser;
+    private RequestProcessor requestProcessor;
 	private String remoteHost = null;
 	private String stringCompareRegName = null;
 	private volatile static long jobNumber = 0;
@@ -24,7 +24,7 @@ public class ServiceHandler extends HttpServlet {
         stringCompareRegName = ctx.getInitParameter("Remote_Object_Name");
 
         // create RequestProcessor, once created, it will start trying to process requests
-        requestProcesser = new RequestProcesser(remoteHost, stringCompareRegName);
+        requestProcessor = new RequestProcessor(remoteHost, stringCompareRegName);
 
 	} // init()
 
@@ -66,18 +66,18 @@ public class ServiceHandler extends HttpServlet {
             r.setTextT(t);
 
 			//Add job to in-queue
-            requestProcesser.addRequest(r);
+            requestProcessor.addRequest(r);
 
 		}else{ // if there is a task number
 
 			//Check out-queue to see if comparison is completed
-            isProcessed = requestProcesser.isProcessed(taskNumber);
+            isProcessed = requestProcessor.isProcessed(taskNumber);
 
             // if finished
             if(isProcessed == true) {
 
                 // get the result object
-                result = requestProcesser.getResult(taskNumber);
+                result = requestProcessor.getResult(taskNumber);
 
             } // if
 
