@@ -24,6 +24,8 @@ public class StringComparisonFactory {
     // returns the specified string comparison algorithm
     public StringComparator getComparisonAlgorithm(String algo){
 
+        System.out.println("Creating: " + algo + " algorithm object.");
+
         StringComparator s = null;
 
         // select the string comparison algorithm
