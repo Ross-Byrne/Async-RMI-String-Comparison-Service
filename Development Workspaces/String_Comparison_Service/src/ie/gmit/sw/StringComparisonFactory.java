@@ -32,7 +32,10 @@ public class StringComparisonFactory {
 
                 System.out.println("Creating: " + algo + " algorithm object.");
 
-                s = new LevenshteinComparator();
+                s = new DamerauLevenshteinComparator();
+
+               // System.out.println(s.getClass().getCanonicalName());
+
                 break;
             case "Euclidean Distance":
 

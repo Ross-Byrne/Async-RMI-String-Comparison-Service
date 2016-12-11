@@ -3,7 +3,7 @@ package ie.gmit.sw;
 /**
  * Created by Ross Byrne on 07/12/16.
  * Implementation of StringCamparator.
- * Compares strings using Levenshtein Algorithm
+ * Compares strings using Levenshtein Algorithm.
  */
 public class LevenshteinComparator implements StringComparator {
 
