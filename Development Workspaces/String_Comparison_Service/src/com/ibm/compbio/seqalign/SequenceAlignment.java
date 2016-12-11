@@ -8,7 +8,7 @@ import com.ibm.compbio.DynamicProgramming;
 
 /**
  * @author Paul Reiners
- * 
+ * Taken from: https://www.ibm.com/developerworks/library/j-seqalign/
  */
 public abstract class SequenceAlignment extends DynamicProgramming {
 

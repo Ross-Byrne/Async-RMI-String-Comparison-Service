@@ -7,7 +7,7 @@ import com.ibm.compbio.Cell;
 
 /**
  * @author Paul Reiners
- * 
+ * Taken from: https://www.ibm.com/developerworks/library/j-seqalign/
  */
 public class SmithWaterman extends SequenceAlignment {
 

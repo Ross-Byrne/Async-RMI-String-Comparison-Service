@@ -7,7 +7,8 @@ import java.util.Random;
 
 /**
  * @author Paul Reiners
- * 
+ *
+ * Taken from: https://www.ibm.com/developerworks/library/j-seqalign/
  */
 public class DNAGenerator {
 
