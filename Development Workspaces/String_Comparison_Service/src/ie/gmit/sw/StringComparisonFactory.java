@@ -34,23 +34,11 @@ public class StringComparisonFactory {
 
                 s = new DamerauLevenshteinComparator();
                 break;
-            case "Euclidean Distance":
-
-                System.out.println("Creating: " + algo + " algorithm object.");
-
-                s = new LevenshteinComparator();
-                break;
             case "Hamming Distance":
 
                 System.out.println("Creating: " + algo + " algorithm object.");
 
                 s = new HammingDistanceComparator();
-                break;
-            case "Hirschberg's Algorithm":
-
-                System.out.println("Creating: " + algo + " algorithm object.");
-
-                s = new LevenshteinComparator();
                 break;
             case "Jaro-Winkler Distance":
 
