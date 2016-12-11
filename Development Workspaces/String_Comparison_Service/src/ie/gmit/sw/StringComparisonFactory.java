@@ -77,7 +77,7 @@ public class StringComparisonFactory {
 
                 System.out.println("Creating: " + algo + " algorithm object.");
 
-                s = new LevenshteinComparator();
+                s = new SmithWatermanComparator();
                 break;
             default:
 

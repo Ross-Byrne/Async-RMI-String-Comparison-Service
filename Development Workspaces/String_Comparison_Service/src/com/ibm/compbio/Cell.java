@@ -6,7 +6,7 @@ package com.ibm.compbio;
 
 /**
  * @author Paul Reiners
- *
+ *Taken from: https://www.ibm.com/developerworks/library/j-seqalign/
  */
 public class Cell {
    private Cell prevCell;
