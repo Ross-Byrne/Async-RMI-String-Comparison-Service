@@ -38,7 +38,11 @@ The website can be found at the address localhost:8080/comparator<br>
 The project is made up of two components. A servlet that runs in TomCat and a RMI String comparison service that runs independently.
 
 The String Service registers a remote object that can then be looked up and used by the servlet running in Tomcat. Once the servlet starts, it gets a handle on the remote object using the RMI registry lookup.<br>
-When a request is sent to the server, the request is added to a request object and put on a queue. This queue is polled by a request processing thread. It checks for requests in the queue and processes them by using the remote String Service object to compare two strings. This returns a Result that is then places on a out queue.
+When a request is sent to the server, the request is added to a request object and put on a queue. This queue is polled by a request processing thread. It checks for requests in the queue and processes them by using the remote String Service object to compare two strings. This returns a Result that is then places on a out queue.<br>
+The website then polls the server to see if the result in the out queue is finished being processed by the String Comparison Service.
+
+The String Service contains a compare method. This method creates a result object, adds a new thread to a thread pool and returns the result object. Because the work is being done on a thread, the result object is returned straight away. The new thread uses a factory to get the correct algorithm, runs the algorithm and then flags the result as processed.
+
 
 #Other Notes
 ###The Remote Interfaces
