@@ -1,7 +1,5 @@
 package ie.gmit.sw;
 
-import java.util.function.ToIntFunction;
-
 /**
  * Created by Ross Byrne on 07/12/16.
  * Implementation of StringCamparator.

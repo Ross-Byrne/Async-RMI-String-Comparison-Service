@@ -24,47 +24,64 @@ public class StringComparisonFactory {
     // returns the specified string comparison algorithm
     public StringComparator getComparisonAlgorithm(String algo){
 
-        System.out.println("Creating: " + algo + " algorithm object.");
-
         StringComparator s = null;
 
         // select the string comparison algorithm
         switch (algo){
             case "Damerau-Levenshtein Distance":
 
+                System.out.println("Creating: " + algo + " algorithm object.");
+
                 s = new LevenshteinComparator();
                 break;
             case "Euclidean Distance":
+
+                System.out.println("Creating: " + algo + " algorithm object.");
 
                 s = new LevenshteinComparator();
                 break;
             case "Hamming Distance":
 
-                s = new LevenshteinComparator();
+                System.out.println("Creating: " + algo + " algorithm object.");
+
+                s = new HammingDistanceComparator();
                 break;
             case "Hirschberg's Algorithm":
+
+                System.out.println("Creating: " + algo + " algorithm object.");
 
                 s = new LevenshteinComparator();
                 break;
             case "Jaro–Winkler Distance":
 
+                System.out.println("Creating: " + algo + " algorithm object.");
+
                 s = new LevenshteinComparator();
                 break;
             case "Levenshtein Distance":
+
+                System.out.println("Creating: " + algo + " algorithm object.");
 
                 s = new LevenshteinComparator();
                 break;
             case "Needleman-Wunsch":
 
+                System.out.println("Creating: " + algo + " algorithm object.");
+
                 s = new LevenshteinComparator();
                 break;
             case "Smith Waterman":
+
+                System.out.println("Creating: " + algo + " algorithm object.");
 
                 s = new LevenshteinComparator();
                 break;
             default:
 
-            s = new LevenshteinComparator();
+                System.out.println("Creating: " + algo + " algorithm object as default.");
+
+                s = new LevenshteinComparator();
+                break;
 
         } // switch()
 
