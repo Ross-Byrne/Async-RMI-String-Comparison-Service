@@ -57,3 +57,7 @@ Smith Waterman.
 ###The Remote Interfaces
 Due to the required submission format, I was unable to put the RMI remote interfaces into their own JAR file. In the project, the same interfaces are in both components. I feel that a better design would be to put the Remote Interfaces into a JAR and distribute the JAR with any component that needs the Remote Interfaces. This would make sure anyone using the RMI String service has the correct version of the Remote Interfaces.
 
+#References
+Needleman-Wunsch Java Implementation: https://www.ibm.com/developerworks/library/j-seqalign/<br>
+Jaro Winkler Java Implementation: https://github.com/tdebatty/java-string-similarity
+
